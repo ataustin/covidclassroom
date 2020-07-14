@@ -150,18 +150,22 @@ plot_classroom <- function(buffer_front, buffer_rear, buffer_left, buffer_right,
   ticks_x <- build_tick_data(desk_tile_data$x, desk_width)
   ticks_y <- build_tick_data(desk_tile_data$y, desk_depth)
   
+  blackboard_data <-  build_blackboard_geom_rect_data(buffer_data, desk_width)
   
-  ggplot() +
-    geom_tile(data = desk_tile_data, aes(x = x, y = y, width = w, height = d)) +
-    geom_rect(data = buffer_data,
-              aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-              fill = "gray", alpha = 0.4) +
-    geom_rect(data = build_blackboard_geom_rect_data(buffer_data, desk_width),
-              aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
-              fill = "black") +
-    labs(x = "", y = "", title = paste("Room", room_number, "-- Seating for", desk_count_w * desk_count_d)) +
-    theme_minimal() +
-    theme(panel.grid.minor = element_blank()) +
-    scale_x_continuous(breaks = ticks_x$breaks, labels = ticks_x$labels) +
-    scale_y_continuous(breaks = ticks_y$breaks, labels = ticks_y$labels)
+  classroom_plot <-
+    ggplot() +
+      geom_tile(data = desk_tile_data, aes(x = x, y = y, width = w, height = d)) +
+      geom_rect(data = buffer_data,
+                aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                fill = "gray", alpha = 0.4) +
+      geom_rect(data = blackboard_data,
+                aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                fill = "black") +
+      labs(x = "", y = "", title = paste("Room", room_number, "-- Seating for", desk_count_w * desk_count_d)) +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = ticks_x$breaks, labels = ticks_x$labels) +
+      scale_y_continuous(breaks = ticks_y$breaks, labels = ticks_y$labels)
+  
+  classroom_plot
 }

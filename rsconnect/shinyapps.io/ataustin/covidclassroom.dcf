@@ -1,0 +1,10 @@
+name: covidclassroom
+title:
+username:
+account: ataustin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2564125
+bundleId: 3384171
+url: https://ataustin.shinyapps.io/covidclassroom/
+when: 1594593202.58691
