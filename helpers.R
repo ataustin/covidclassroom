@@ -6,11 +6,26 @@ compute_effective_dimension <- function(room_dim, buffer1, buffer2, pupil_cleara
 compute_desk_count <- function(min_separation, room_dim, desk_dim) {
   pupil_unit  <- desk_dim + min_separation
   extra_space <- room_dim %% pupil_unit
-  pupil_count <- room_dim / pupil_unit
+  desk_count  <- room_dim / pupil_unit
   
-  desk_count <- if(extra_space >= desk_dim) ceiling(pupil_count) else floor(pupil_count)
+  desk_count <- if(extra_space >= desk_dim) ceiling(desk_count) else floor(desk_count)
   
   desk_count
+}
+
+
+compute_desk_count_staggered <- function(min_separation, room_dim, desk_dim) {
+  stagger_separation   <- compute_stagger_separation(min_separation, desk_dim)
+  count_across_stagger <- compute_desk_count(stagger_separation, room_dim, desk_dim)
+  
+}
+
+
+compute_stagger_separation <- function(min_separation, desk_dim) {
+  separation_radians <- acos(0.5 * (min_separation - desk_dim) / min_separation)
+  stagger_separation <- sin(separation_radians) * min_separation
+
+  stagger_separation
 }
 
 
